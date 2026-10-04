@@ -60,7 +60,9 @@ def get_repo_root() -> Path:
 
 def write_image_override(terraform_dir: Path, image_uri: str):
     override_path = terraform_dir / "researcher.auto.tfvars.json"
-    override_path.write_text(json.dumps({"researcher_image_uri": image_uri}, indent=2) + "\n")
+    override_path.write_text(
+        json.dumps({"researcher_image_uri": image_uri}, indent=2) + "\n"
+    )
 
 
 def wait_for_lambda_active(region: str, function_name: str):
@@ -184,6 +186,8 @@ def main():
             "build",
             "--platform",
             "linux/amd64",
+            "--provenance=false",
+            "--sbom=false",
             "-t",
             local_image,
             ".",
